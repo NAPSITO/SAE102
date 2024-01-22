@@ -88,20 +88,20 @@ package body Resolution_Hashi is
 
       if aUnSuivant(G, C, NORD) then
          successeurs.NORD := obtenirSuivant(G, C, NORD);
-         if estIleComplete(successeurs.NORD) = False then
+         if estIleComplete(ObtenirIle(successeurs.NORD)) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.NORD = C.T.MER then
+         elsif estMer(ObtenirTypeCase(successeurs.NORD)) then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.NORD := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         successeurs.NORD := (Coordonnee => ConstruireCoordonnees(0, 0), Type_Case => modifierIle(ObtenirValeur(),-1), IleComplete => False, NbPonts => 0);
       end if;
 
       if aUnSuivant(G, C, SUD) then
          successeurs.SUD := obtenirSuivant(G, C, SUD);
-         if estIleComplete(successeurs.SUD) = False then
+         if estIleComplete(ObtenirIle(successeurs.SUD)) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.SUD = C.T.MER then
+         elsif estMer(ObtenirTypeCase(successeurs.SUD)) then
             NbPonts := NbPonts + 1;
          end if;
       else
@@ -110,9 +110,9 @@ package body Resolution_Hashi is
 
       if aUnSuivant(G, C, EST) then
          successeurs.EST := obtenirSuivant(G, C, EST);
-         if estIleComplete(successeurs.EST) = False then
+         if estIleComplete(ObtenirIle(successeurs.EST)) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.EST = C.T.MER then
+         elsif estMer(ObtenirTypeCase(successeurs.EST)) then
             NbPonts := NbPonts + 1;
          end if;
       else
@@ -121,9 +121,9 @@ package body Resolution_Hashi is
 
       if aUnSuivant(G, C, OUEST) then
          successeurs.OUEST := obtenirSuivant(G, C, OUEST);
-         if EstIleIncomplete(successeurs.OUEST) then
+         if estIleComplete(ObtenirIle(successeurs.OUEST)) then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.OUEST = C.T.MER then
+         elsif estMer(ObtenirTypeCase(successeurs.OUEST)) then
             NbPonts := NbPonts + 1;
          end if;
       else
