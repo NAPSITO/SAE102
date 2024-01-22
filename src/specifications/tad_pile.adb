@@ -5,8 +5,8 @@ package body TAD_Pile is
    -- construirePile --
    --------------------
 
-    function construirePile return Type_Pile is
-      Nouvelle_Pile : Type_Pile;
+   function construirePile return Type_Pile is
+      Nouvelle_pile : Type_Pile;
    begin
          --Nouvelle_pile.nb_elements:=0;
          return Nouvelle_pile;
@@ -18,8 +18,7 @@ package body TAD_Pile is
 
    function estVide (pile : in Type_Pile) return Boolean is
    begin
-      pragma Compile_Time_Warning (Standard.True, "estVide unimplemented");
-      return raise Program_Error with "Unimplemented function estVide";
+      return pile.nb_elements = 0;
    end estVide;
 
    -------------
@@ -39,20 +38,29 @@ package body TAD_Pile is
    -- empiler --
    -------------
 
-   function empiler (pile : in Type_Pile; e : in T) return Type_Pile is
+   function empiler (pile : in out Type_Pile; e : in T) return Type_Pile is
    begin
-      pragma Compile_Time_Warning (Standard.True, "empiler unimplemented");
-      return raise Program_Error with "Unimplemented function empiler";
+      if pile.nb_elements = TAILLE_MAX then
+         raise PILE_PLEINE;
+      else
+         pile.nb_elements := pile.nb_elements + 1;
+         pile.elements(pile.nb_elements) := e;
+         return pile;
+      end if;
    end empiler;
 
    -------------
    -- depiler --
    -------------
 
-   function depiler (pile : in Type_Pile) return Type_Pile is
+   function depiler (pile : in out Type_Pile) return Type_Pile is
    begin
-      pragma Compile_Time_Warning (Standard.True, "depiler unimplemented");
-      return raise Program_Error with "Unimplemented function depiler";
+      if estVide(pile) then
+         raise PILE_VIDE;
+      else
+         pile.nb_elements:=pile.nb_elements-1;
+         return pile;
+      end if;
    end depiler;
 
 end TAD_Pile;
