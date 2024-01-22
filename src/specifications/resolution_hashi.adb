@@ -144,29 +144,48 @@ package body Resolution_Hashi is
       Cible : in out Type_CaseHashi; Pont : in Type_Pont;
       O : in Type_Orientation)
    is
-      procedure ConstruirePontVertical
-        (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
-      begin
-         if EstInstancie(Pont) then
-            ObtenirCase(G, ConstruireCoordonnees(Ligne, Colonne)).Valeur := ObtenirValeur(Pont);
-            G.g(Ligne + 1, Colonne).Pont_Vertical := ObtenirValeur(Pont);
+      debut: Integer;
+      fin: Integer;
+      caseActuelle: Type_CaseHashi;
+   begin
+      if ValeurOrientation(O) = -1 then
+         debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
+         caseActuelle := Source;
+         fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
+         for i in debut..fin loop
+            caseActuelle := modifierPont(C => Source, p => Pont);
+         end loop;
+      else
+         if ValeurOrientation(O) = - 2 then
+            debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
+            caseActuelle := Source;
+            fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
+            for i in debut..fin loop
+               caseActuelle := modifierPont(C => Source, p => Pont);
+            end loop;
          else
-            raise Program_Error with "Pont non instancié";
+            if ValeurOrientation(O) = 1 then
+               debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
+               caseActuelle := Source;
+               fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
+               for i in debut..fin loop
+                  caseActuelle := modifierPont(C => Source, p => Pont);
+               end loop;
+            else
+               if ValeurOrientation(O) = 2 then
+                  debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
+                  caseActuelle := Source;
+                  fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
+                  for i in debut..fin loop
+                     caseActuelle := modifierPont(C => Source, p => Pont);
+                  end loop;
+               else
+                  raise PAS_D_ILE_CIBLE;
+               end if;
+            end if;
          end if;
-      end ConstruirePontVertical;
-
-      procedure ConstruirePontHorizontal
-        (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
-      begin
-         if EstInstancie(Pont) then
-            G.g(Ligne, Colonne).Pont_Horizontal := ObtenirValeur(Pont);
-            G.g(Ligne, Colonne + 1).Pont_Horizontal := ObtenirValeur(Pont);
-         else
-            raise Program_Error with "Pont non instancié";
-         end if;
-      end ConstruirePontHorizontal;
-
-
+      end if;
+   end ConstruireLeChemin;
 
 
    -------------------

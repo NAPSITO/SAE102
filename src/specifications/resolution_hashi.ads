@@ -43,7 +43,7 @@ package Resolution_Hashi is
      (G : in     Type_Grille; C : in Type_CaseHashi; s : out Type_Tab_Successeurs;
       NbPonts :    out Integer; NbNoeuds : out Integer);
 
-   -- modifie le graĥe g en inscrivant des ponts de valeur pont
+   -- modifie le graphe g en inscrivant des ponts de valeur pont
    -- entre la case source et la case cible
    -- en suivant l'orientation o
    procedure construireLeChemin
