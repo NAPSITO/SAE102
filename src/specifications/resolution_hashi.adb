@@ -155,24 +155,21 @@ package body Resolution_Hashi is
          for i in debut..fin loop
             caseActuelle := modifierPont(C => Source, p => Pont);
          end loop;
-      else
-         if ValeurOrientation(O) = - 2 then
+      elsif ValeurOrientation(O) = - 2 then
             debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
             caseActuelle := Source;
             fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
             for i in debut..fin loop
                caseActuelle := modifierPont(C => Source, p => Pont);
             end loop;
-         else
-            if ValeurOrientation(O) = 1 then
+         elsif ValeurOrientation(O) = 1 then
                debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
                caseActuelle := Source;
                fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
                for i in debut..fin loop
                   caseActuelle := modifierPont(C => Source, p => Pont);
                end loop;
-            else
-               if ValeurOrientation(O) = 2 then
+            elsif ValeurOrientation(O) = 2 then
                   debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
                   caseActuelle := Source;
                   fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
