@@ -76,66 +76,60 @@ package body Resolution_Hashi is
    ----------------------------------
 
     procedure construireTableauSuccesseurs
-     (G : in Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs;
+     (G : in Type_Grille; C : in Type_CaseHashi; s : out Type_Tab_Successeurs;
       NbPonts : out Integer; NbNoeuds : out Integer) is
-      Successeurs : Type_Tab_Successeurs;
+      successeurs : Type_Tab_Successeurs;
       PontsPotentiels : Integer := 0;
       NoeudsPotentiels : Integer := 0;
 
    begin
-      -- Initialize the number of potential successors
       NbPonts := 0;
       NbNoeuds := 0;
 
-      -- Check the north direction
       if aUnSuivant(G, C, NORD) then
-         successeurs.N := obtenirSuivant(G, C, NORD);
-         if EstIleIncomplete(successeurs.N) then
+         successeurs.NORD := obtenirSuivant(G, C, NORD);
+         if estIleComplete(successeurs.NORD) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.N.Type_Case = TypeCase.MER then
+         elsif successeurs.NORD = C.T.MER then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.N := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         successeurs.NORD := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
       end if;
 
-      -- Check the south direction
       if aUnSuivant(G, C, SUD) then
-         successeurs.S := obtenirSuivant(G, C, SUD);
-         if EstIleIncomplete(successeurs.S) then
+         successeurs.SUD := obtenirSuivant(G, C, SUD);
+         if estIleComplete(successeurs.SUD) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.S.Type_Case = TypeCase.MER then
+         elsif successeurs.SUD = C.T.MER then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.S := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         successeurs.SUD := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
       end if;
 
-      -- Check the east direction
       if aUnSuivant(G, C, EST) then
-         successeurs.E := obtenirSuivant(G, C, EST);
-         if EstIleIncomplete(successeurs.E) then
+         successeurs.EST := obtenirSuivant(G, C, EST);
+         if estIleComplete(successeurs.EST) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.E.Type_Case = TypeCase.MER then
+         elsif successeurs.EST = C.T.MER then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.E := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         successeurs.EST := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
       end if;
 
-      -- Check the west direction
       if aUnSuivant(G, C, OUEST) then
-         successeurs.W := obtenirSuivant(G, C, OUEST);
-         if EstIleIncomplete(successeurs.W) then
+         successeurs.OUEST := obtenirSuivant(G, C, OUEST);
+         if EstIleIncomplete(successeurs.OUEST) then
             NbNoeuds := NbNoeuds + 1;
-         elsif successeurs.W.Type_Case = TypeCase.MER then
+         elsif successeurs.OUEST = C.T.MER then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.W := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         successeurs.OUEST := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
       end if;
 
-      -- Assign the results to the out parameter
       s := successeurs;
       NbPonts := NbPonts;
       NbNoeuds := NbNoeuds;

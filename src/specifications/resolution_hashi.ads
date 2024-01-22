@@ -39,7 +39,7 @@ package Resolution_Hashi is
    -- nbPont est le nombre de ponts successeurs potentiels
    -- nbNoeud est le nombre de noeuds successeurs potentiels
    procedure construireTableauSuccesseurs
-     (G : in     Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs;
+     (G : in     Type_Grille; C : in Type_CaseHashi; s : out Type_Tab_Successeurs;
       NbPonts :    out Integer; NbNoeuds : out Integer);
 
    -- modifie le graĥe g en inscrivant des ponts de valeur pont
