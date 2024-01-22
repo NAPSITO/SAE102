@@ -81,6 +81,7 @@ package body Resolution_Hashi is
    is
    begin
 
+      null;
    end construireTableauSuccesseurs;
 
    ------------------------
