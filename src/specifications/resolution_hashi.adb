@@ -76,14 +76,7 @@ package body Resolution_Hashi is
    ----------------------------------
 
     procedure construireTableauSuccesseurs
-<<<<<<< HEAD
      (G : in Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs; NbPonts : out Integer; NbNoeuds : out Integer) is
-      Successeurs : Type_Tab_Successeurs;
-=======
-     (G : in Type_Grille; C : in Type_CaseHashi; s : out Type_Tab_Successeurs;
-      NbPonts : out Integer; NbNoeuds : out Integer) is
-      successeurs : Type_Tab_Successeurs;
->>>>>>> d570c51d5aa8723d17da4592e7dd9168bfd9c563
       PontsPotentiels : Integer := 0;
       NoeudsPotentiels : Integer := 0;
 
@@ -98,8 +91,8 @@ package body Resolution_Hashi is
          elsif estMer(ObtenirTypeCase(successeurs.NORD)) then
             NbPonts := NbPonts + 1;
          end if;
-      else
-         successeurs.NORD := (Coordonnee => ConstruireCoordonnees(0, 0), Type_Case => modifierIle(ObtenirValeur(),-1), IleComplete => False, NbPonts => 0);
+      --else
+        -- successeurs.NORD := (Coordonnee => ConstruireCoordonnees(0, 0), Type_Case => modifierIle(ObtenirValeur(),-1), IleComplete => False, NbPonts => 0);
       end if;
 
       if aUnSuivant(G, C, SUD) then
@@ -154,7 +147,7 @@ package body Resolution_Hashi is
         (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
       begin
          if Pont=DEUX then
-            ObtenirCase(G, (ObtenirLigne(g), ObtenirColonne(g)) := 2;
+            ObtenirCase(G, ConstruireCoordonnees(ObtenirLigne(g), ObtenirColonne(g)) := 2;
             G.g(Ligne + 1, Colonne).Pont_Vertical := 2;
          else
             G.g(Ligne, Colonne).Pont_Vertical := 1;
