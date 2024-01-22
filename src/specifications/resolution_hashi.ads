@@ -4,6 +4,7 @@ with CaseHashi; use CaseHashi;
 with Orientation; use Orientation;
 with Ile; use Ile;
 with TypeCase; use TypeCase;
+with Coordonnee; use Coordonnee;
 
 package Resolution_Hashi is
 
