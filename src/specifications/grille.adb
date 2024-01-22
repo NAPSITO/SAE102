@@ -19,9 +19,7 @@ package body Grille is
       while GrilleHashi.nbl <= nbl loop
          GrilleHashi.nbc := 1;
          while GrilleHashi.nbc <= nbc loop
-            GrilleHashi.g (GrilleHashi.nbl, GrilleHashi.nbc) :=
-              ConstruireCase
-                (ConstruireCoordonnees (GrilleHashi.nbl, GrilleHashi.nbc));
+            GrilleHashi.g (GrilleHashi.nbl, GrilleHashi.nbc) := ConstruireCase(ConstruireCoordonnees (GrilleHashi.nbl, GrilleHashi.nbc));
             GrilleHashi.nbc := GrilleHashi.nbc + 1;
          end loop;
          GrilleHashi.nbl := GrilleHashi.nbl + 1;
