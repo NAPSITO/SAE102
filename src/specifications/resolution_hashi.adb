@@ -134,7 +134,6 @@ package body Resolution_Hashi is
       NbNoeuds := NbNoeuds;
    end construireTableauSuccesseurs;
 
-
    ------------------------
    -- construireLeChemin --
    ------------------------
@@ -148,7 +147,7 @@ package body Resolution_Hashi is
         (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
       begin
          if Pont=DEUX then
-            ObtenirCase(G, ConstruireCoordonnees(ObtenirLigne(g), ObtenirColonne(g)) := 2;
+            ObtenirCase(G, ConstruireCoordonnees(ObtenirLigne(g), ObtenirColonne(g))) := 2;
             G.g(Ligne + 1, Colonne).Pont_Vertical := 2;
          else
             G.g(Ligne, Colonne).Pont_Vertical := 1;
@@ -158,7 +157,7 @@ package body Resolution_Hashi is
       procedure ConstruirePontHorizontal
         (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
       begin
-         if Pont = Double then
+         if Pont = DEUX then
             G.g(Ligne, Colonne).Pont_Horizontal := 2;
             G.g(Ligne, Colonne + 1).Pont_Horizontal := 2;
          else

@@ -30,9 +30,29 @@
       <vfs_project>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\hashi.gpr</vfs_project>
       <vfs_file>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\tests\Tests_TAD\run_tests_pile.adb</vfs_file>
     </file_marker>
-    <file_marker current="true" column=" 63" line=" 151" >
+    <file_marker column=" 63" line=" 150" >
       <vfs_project>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\hashi.gpr</vfs_project>
       <vfs_file>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\src\specifications\resolution_hashi.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 37" line=" 135" >
+      <vfs_project>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\src\specifications\resolution_hashi.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\tests\Tests_TAD\types_tests.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 37" line=" 135" >
+      <vfs_project>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\src\specifications\resolution_hashi.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\tests\Tests_TAD\run_tests_CaseHashi.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 1" line=" 1" >
+      <vfs_project>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\shunv\Documents\BUT\SAE_102\sae-1.02-seance-5\tests\Tests_TAD\run_all_tests.adb</vfs_file>
     </file_marker>
   </Project>
 </Locations>

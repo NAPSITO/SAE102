@@ -2,7 +2,7 @@ project Hashi is
 
    for Source_Dirs use ("src/**", "tests/**");
    for Object_Dir use "obj";
-   for Main use ("run_tests_pile.adb");
+   for Main use ("run_all_tests.adb", "run_tests_pile.adb");
 
 end Hashi;
 
