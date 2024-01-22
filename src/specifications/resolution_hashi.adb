@@ -1,7 +1,7 @@
 pragma Ada_2012;
 package body Resolution_Hashi is
 
-    ---------------------------
+   ---------------------------
    -- rechercherUneIleCible --
    ---------------------------
 
@@ -50,7 +50,7 @@ package body Resolution_Hashi is
                      -- si son predecesseur est
                      -- de valeur 1 on continue
                      if (estPont (ObtenirTypeCase (caseCourante))
-                        and then ObtenirPont (caseCourante) = UN)
+                         and then ObtenirPont (caseCourante) = UN)
                        or (EstIle(ObtenirTypeCase(CaseCourante)))
                      then
                         caseCourante := Suivant;
@@ -93,7 +93,7 @@ package body Resolution_Hashi is
             NbPonts := NbPonts + 1;
          end if;
       else
-        s.NORD := ConstruireCase(C => ConstruireCoordonnees(0,0));
+         s.NORD := ConstruireCase(C => ConstruireCoordonnees(0,0));
       end if;
 
       if aUnSuivant(G, C, SUD) then
@@ -148,39 +148,33 @@ package body Resolution_Hashi is
       fin: Integer;
       caseActuelle: Type_CaseHashi;
    begin
+      caseActuelle := Source;
       if ValeurOrientation(O) = -1 then
          debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
-         caseActuelle := Source;
          fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
          for i in debut..fin loop
             caseActuelle := modifierPont(C => Source, p => Pont);
          end loop;
       elsif ValeurOrientation(O) = - 2 then
-            debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
-            caseActuelle := Source;
-            fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
-            for i in debut..fin loop
-               caseActuelle := modifierPont(C => Source, p => Pont);
-            end loop;
-         elsif ValeurOrientation(O) = 1 then
-               debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
-               caseActuelle := Source;
-               fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
-               for i in debut..fin loop
-                  caseActuelle := modifierPont(C => Source, p => Pont);
-               end loop;
-            elsif ValeurOrientation(O) = 2 then
-                  debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
-                  caseActuelle := Source;
-                  fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
-                  for i in debut..fin loop
-                     caseActuelle := modifierPont(C => Source, p => Pont);
-                  end loop;
-               else
-                  raise PAS_D_ILE_CIBLE;
-               end if;
-            end if;
-         end if;
+         debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
+         fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
+         for i in debut..fin loop
+            caseActuelle := modifierPont(C => Source, p => Pont);
+         end loop;
+      elsif ValeurOrientation(O) = 1 then
+         debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
+         fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
+         for i in debut..fin loop
+            caseActuelle := modifierPont(C => Source, p => Pont);
+         end loop;
+      elsif ValeurOrientation(O) = 2 then
+         debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
+         fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
+         for i in debut..fin loop
+            caseActuelle := modifierPont(C => Source, p => Pont);
+         end loop;
+      else
+         raise PAS_D_ILE_CIBLE;
       end if;
    end ConstruireLeChemin;
 
@@ -189,23 +183,21 @@ package body Resolution_Hashi is
    -- ResoudreHashi --
    -------------------
 
-  procedure ResoudreHashi is
-   -- Déclarez ici vos variables nécessaires, initialisez-les si besoin
-   G : Type_Grille;
-   Trouve : Boolean;
+   procedure ResoudreHashi (G : in out Type_Grille; Trouve : out Boolean) is
+      -- Déclarez ici vos variables nécessaires, initialisez-les si besoin
 
-begin
-   -- Initialisez votre grille et d'autres données si nécessaire
+   begin
+      -- Initialisez votre grille et d'autres données si nécessaire
 
-   -- Appelez la procédure de résolution de Hashi
-   ResoudreHashi(G, Trouve);
+      -- Appelez la procédure de résolution de Hashi
+      ResoudreHashi(G, Trouve);
 
-   -- Affichez le résultat ou effectuez d'autres actions nécessaires
-   if Trouve then
-      Put_Line("La grille a été résolue.");
-   else
-      Put_Line("La grille n'a pas pu être résolue.");
-   end if;
-end ResoudreHashi;
+      -- Affichez le résultat ou effectuez d'autres actions nécessaires
+      if Trouve then
+         Put_Line("La grille a été résolue.");
+      else
+         Put_Line("La grille n'a pas pu être résolue.");
+      end if;
+   end ResoudreHashi;
 
 end Resolution_Hashi;
