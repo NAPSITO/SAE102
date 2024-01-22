@@ -1,14 +1,10 @@
 <?xml version="1.0"?>
-<Locations>
+<Locations >
   <Project>
     <vfs_file />
-    <file_marker column=" 1" line=" 1" >
-      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
-      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\coordonnee.ads</vfs_file>
-    </file_marker>
     <file_marker current="true" column=" 1" line=" 1" >
-      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
-      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\tests\tests_resolution\affichage.adb</vfs_file>
+      <vfs_project>C:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\src\specifications\TAD_Pile.ads</vfs_file>
     </file_marker>
   </Project>
 </Locations>

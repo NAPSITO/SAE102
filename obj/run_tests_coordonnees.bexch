@@ -1,0 +1,22 @@
+[GENERATED OBJECT FILE]
+b__run_tests_coordonnees.o
+[PROJECT FILES]
+C:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\hashi.gpr
+20240122074612 287307c7ce88b11d28efeeed8f44e429
+[BOUND OBJECT FILES]
+C:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\obj\coordonnee.o
+C:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\obj\types_tests.o
+C:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\obj\a_tester_Coordonnees.o
+C:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\obj\run_tests_Coordonnees.o
+[GENERATED SOURCE FILES]
+b__run_tests_coordonnees.ads
+b__run_tests_coordonnees.adb
+b__run_tests_coordonnees.ali
+[RESULTING OPTIONS]
+-LC:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\obj\
+-LC:\Users\natal\OneDrive\Documents\BUT1\SAE102\sae-1.02-seance-5\obj\
+-LC:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/
+-static
+-static-libgcc
+C:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/libgnat.a
+-Wl,--stack=0x2000000
