@@ -72,11 +72,12 @@ package body Resolution_Hashi is
    end rechercherUneIleCible;
 
    ----------------------------------
-   -- construireTableauSuccesseurs --
+   -- construireTableauS --
    ----------------------------------
 
-    procedure construireTableauSuccesseurs
-     (G : in Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs; NbPonts : out Integer; NbNoeuds : out Integer) is
+   procedure construireTableauSuccesseurs
+     (G : in     Type_Grille; C : in Type_CaseHashi; s : out Type_Tab_Successeurs;
+      NbPonts :    out Integer; NbNoeuds : out Integer) is
       PontsPotentiels : Integer := 0;
       NoeudsPotentiels : Integer := 0;
 
@@ -85,50 +86,50 @@ package body Resolution_Hashi is
       NbNoeuds := 0;
 
       if aUnSuivant(G, C, NORD) then
-         successeurs.NORD := obtenirSuivant(G, C, NORD);
-         if estIleComplete(ObtenirIle(successeurs.NORD)) = False then
+         s.NORD := obtenirSuivant(G, C, NORD);
+         if estIleComplete(ObtenirIle(s.NORD)) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif estMer(ObtenirTypeCase(successeurs.NORD)) then
+         elsif estMer(ObtenirTypeCase(s.NORD)) then
             NbPonts := NbPonts + 1;
          end if;
-      --else
-        -- successeurs.NORD := (Coordonnee => ConstruireCoordonnees(0, 0), Type_Case => modifierIle(ObtenirValeur(),-1), IleComplete => False, NbPonts => 0);
+      else
+        s.NORD := ConstruireCase(C => ConstruireCoordonnees(0,0));
       end if;
 
       if aUnSuivant(G, C, SUD) then
-         successeurs.SUD := obtenirSuivant(G, C, SUD);
-         if estIleComplete(ObtenirIle(successeurs.SUD)) = False then
+         s.SUD := obtenirSuivant(G, C, SUD);
+         if estIleComplete(ObtenirIle(s.SUD)) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif estMer(ObtenirTypeCase(successeurs.SUD)) then
+         elsif estMer(ObtenirTypeCase(s.SUD)) then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.SUD := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         s.SUD := ConstruireCase(C => ConstruireCoordonnees(0,0));
       end if;
 
       if aUnSuivant(G, C, EST) then
-         successeurs.EST := obtenirSuivant(G, C, EST);
-         if estIleComplete(ObtenirIle(successeurs.EST)) = False then
+         s.EST := obtenirSuivant(G, C, EST);
+         if estIleComplete(ObtenirIle(s.EST)) = False then
             NbNoeuds := NbNoeuds + 1;
-         elsif estMer(ObtenirTypeCase(successeurs.EST)) then
+         elsif estMer(ObtenirTypeCase(s.EST)) then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.EST := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         s.EST := ConstruireCase(C => ConstruireCoordonnees(0,0));
       end if;
 
       if aUnSuivant(G, C, OUEST) then
-         successeurs.OUEST := obtenirSuivant(G, C, OUEST);
-         if estIleComplete(ObtenirIle(successeurs.OUEST)) then
+         s.OUEST := obtenirSuivant(G, C, OUEST);
+         if estIleComplete(ObtenirIle(s.OUEST)) then
             NbNoeuds := NbNoeuds + 1;
-         elsif estMer(ObtenirTypeCase(successeurs.OUEST)) then
+         elsif estMer(ObtenirTypeCase(s.OUEST)) then
             NbPonts := NbPonts + 1;
          end if;
       else
-         successeurs.OUEST := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+         s.OUEST := ConstruireCase(C => ConstruireCoordonnees(0,0));
       end if;
 
-      s := successeurs;
+      s := s;
       NbPonts := NbPonts;
       NbNoeuds := NbNoeuds;
    end construireTableauSuccesseurs;
