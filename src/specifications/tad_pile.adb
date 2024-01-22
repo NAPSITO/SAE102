@@ -8,8 +8,8 @@ package body TAD_Pile is
     function construirePile return Type_Pile is
       Nouvelle_Pile : Type_Pile;
    begin
-      Nouvelle_Pile.nb_elements := 0;
-      return Nouvelle_Pile;
+         --Nouvelle_pile.nb_elements:=0;
+         return Nouvelle_pile;
    end construirePile;
 
    -------------
@@ -28,8 +28,11 @@ package body TAD_Pile is
 
    function dernier (pile : in Type_Pile) return T is
    begin
-      pragma Compile_Time_Warning (Standard.True, "dernier unimplemented");
-      return raise Program_Error with "Unimplemented function dernier";
+      if estVide(pile) then
+         raise PILE_VIDE;
+      end if;
+
+      return pile.elements(pile.nb_elements);
    end dernier;
 
    -------------

@@ -4,10 +4,7 @@ with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 -- TAD
 --with TAD_Coordonnee;      use TAD_Coordonnee;
 with Pile_Entier;        use Pile_Entier;
---with TAD_grilleSudoku; use TAD_grilleSudoku;
-with affichage; use affichage;
--- Résolutions de sudoku
-with affichage;           use affichage;
+--with affichage; use affichage;
 --with resolutions;         use resolutions;
 --with remplirGrille;       use remplirGrille;
 
