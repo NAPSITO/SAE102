@@ -16,14 +16,14 @@ package TAD_Pile is
    -- retourne VRAI si une pile est vide
    function estVide (pile : in Type_Pile) return Boolean;
 
-   -- retourne l'element le plus récent de la pile
+   -- retourne l'element le plus rÃ©cent de la pile
    function dernier (pile : in Type_Pile) return T;
 
-   -- ajoute un élément à la pile
-   function empiler (pile : in Type_Pile ; e : in T) return Type_Pile;
+   -- ajoute un Ã©lÃ©ment Ã  la pile
+   function empiler (pile : in out Type_Pile ; e : in T) return Type_Pile;
 
    -- supprime l'element le plus recent de la pile
-   function depiler (pile : in Type_Pile) return Type_Pile;
+   function depiler (pile : in out Type_Pile) return Type_Pile;
 
 private
 
