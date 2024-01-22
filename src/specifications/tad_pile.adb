@@ -8,7 +8,7 @@ package body TAD_Pile is
    function construirePile return Type_Pile is
       Nouvelle_pile : Type_Pile;
    begin
-         Nouvelle_pile.nb_elements:=0;
+         --Nouvelle_pile.nb_elements:=0;
          return Nouvelle_pile;
    end construirePile;
 
@@ -29,9 +29,9 @@ package body TAD_Pile is
    begin
       if estVide(pile) then
          raise PILE_VIDE;
-      else
-         return pile.elements(pile.nb_elements);
       end if;
+
+      return pile.elements(pile.nb_elements);
    end dernier;
 
    -------------
