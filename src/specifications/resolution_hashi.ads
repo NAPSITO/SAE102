@@ -2,6 +2,8 @@ with Grille;     use Grille;
 with Pont ; use Pont;
 with CaseHashi; use CaseHashi;
 with Orientation; use Orientation;
+with Ile; use Ile;
+with TypeCase; use TypeCase;
 
 package Resolution_Hashi is
 
@@ -52,13 +54,5 @@ package Resolution_Hashi is
    -- Si tous les noeuds sont complets alors Trouve est a VRAI
    -- trouver est à FAUX sinon
    procedure ResoudreHashi (G : in out Type_Grille; Trouve : out Boolean);
-
---  private
---     type Type_Tab_Successeurs is record
---        NORD : Type_CaseHashi;
---        SUD : Type_CaseHashi;
---        EST : Type_CaseHashi;
---        OUEST : Type_CaseHashi;
---      end record;
 
 end Resolution_Hashi;

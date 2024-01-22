@@ -75,13 +75,72 @@ package body Resolution_Hashi is
    -- construireTableauSuccesseurs --
    ----------------------------------
 
-   procedure construireTableauSuccesseurs
-     (G : in     Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs;
-      NbPonts :    out Integer; NbNoeuds : out Integer)
-   is
-   begin
+    procedure construireTableauSuccesseurs
+     (G : in Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs;
+      NbPonts : out Integer; NbNoeuds : out Integer) is
+      Successeurs : Type_Tab_Successeurs;
+      PontsPotentiels : Integer := 0;
+      NoeudsPotentiels : Integer := 0;
 
+   begin
+      -- Initialize the number of potential successors
+      NbPonts := 0;
+      NbNoeuds := 0;
+
+      -- Check the north direction
+      if aUnSuivant(G, C, NORD) then
+         successeurs.N := obtenirSuivant(G, C, NORD);
+         if EstIleIncomplete(successeurs.N) then
+            NbNoeuds := NbNoeuds + 1;
+         elsif successeurs.N.Type_Case = TypeCase.MER then
+            NbPonts := NbPonts + 1;
+         end if;
+      else
+         successeurs.N := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+      end if;
+
+      -- Check the south direction
+      if aUnSuivant(G, C, SUD) then
+         successeurs.S := obtenirSuivant(G, C, SUD);
+         if EstIleIncomplete(successeurs.S) then
+            NbNoeuds := NbNoeuds + 1;
+         elsif successeurs.S.Type_Case = TypeCase.MER then
+            NbPonts := NbPonts + 1;
+         end if;
+      else
+         successeurs.S := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+      end if;
+
+      -- Check the east direction
+      if aUnSuivant(G, C, EST) then
+         successeurs.E := obtenirSuivant(G, C, EST);
+         if EstIleIncomplete(successeurs.E) then
+            NbNoeuds := NbNoeuds + 1;
+         elsif successeurs.E.Type_Case = TypeCase.MER then
+            NbPonts := NbPonts + 1;
+         end if;
+      else
+         successeurs.E := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+      end if;
+
+      -- Check the west direction
+      if aUnSuivant(G, C, OUEST) then
+         successeurs.W := obtenirSuivant(G, C, OUEST);
+         if EstIleIncomplete(successeurs.W) then
+            NbNoeuds := NbNoeuds + 1;
+         elsif successeurs.W.Type_Case = TypeCase.MER then
+            NbPonts := NbPonts + 1;
+         end if;
+      else
+         successeurs.W := (Coordonnee => (0, 0), Type_Case => TypeCase.MER, IleComplete => False, NbPonts => 0);
+      end if;
+
+      -- Assign the results to the out parameter
+      s := successeurs;
+      NbPonts := NbPonts;
+      NbNoeuds := NbNoeuds;
    end construireTableauSuccesseurs;
+
 
    ------------------------
    -- construireLeChemin --
