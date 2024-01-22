@@ -76,9 +76,14 @@ package body Resolution_Hashi is
    ----------------------------------
 
     procedure construireTableauSuccesseurs
+<<<<<<< HEAD
+     (G : in Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs; NbPonts : out Integer; NbNoeuds : out Integer) is
+      Successeurs : Type_Tab_Successeurs;
+=======
      (G : in Type_Grille; C : in Type_CaseHashi; s : out Type_Tab_Successeurs;
       NbPonts : out Integer; NbNoeuds : out Integer) is
       successeurs : Type_Tab_Successeurs;
+>>>>>>> d570c51d5aa8723d17da4592e7dd9168bfd9c563
       PontsPotentiels : Integer := 0;
       NoeudsPotentiels : Integer := 0;
 
@@ -145,11 +150,43 @@ package body Resolution_Hashi is
       cible : in out Type_CaseHashi; pont : in Type_Pont;
       o     : in     Type_Orientation)
    is
+      procedure ConstruirePontVertical
+        (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
+      begin
+         if Pont=DEUX then
+            ObtenirCase(G, (ObtenirLigne(g), ObtenirColonne(g)) := 2;
+            G.g(Ligne + 1, Colonne).Pont_Vertical := 2;
+         else
+            G.g(Ligne, Colonne).Pont_Vertical := 1;
+         end if;
+      end ConstruirePontVertical;
+
+      procedure ConstruirePontHorizontal
+        (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
+      begin
+         if Pont = Double then
+            G.g(Ligne, Colonne).Pont_Horizontal := 2;
+            G.g(Ligne, Colonne + 1).Pont_Horizontal := 2;
+         else
+            G.g(Ligne, Colonne).Pont_Horizontal := 1;
+         end if;
+      end ConstruirePontHorizontal;
+
    begin
-      pragma Compile_Time_Warning
-        (Standard.True, "construireLeChemin unimplemented");
-      raise Program_Error with "Unimplemented procedure construireLeChemin";
-   end construireLeChemin;
+      -- Case orientation is North
+      if o = NORD then
+         ConstruirePontVertical(G, source.Coordonnee.Ligne, source.Coordonnee.Colonne, pont);
+      -- Case orientation is South
+      elsif o = SUD then
+         ConstruirePontVertical(G, cible.Coordonnee.Ligne, cible.Coordonnee.Colonne, pont);
+      -- Case orientation is East
+      elsif o = EST then
+         ConstruirePontHorizontal(G, source.Coordonnee.Ligne, source.Coordonnee.Colonne, pont);
+      -- Case orientation is West
+      elsif o = OUEST then
+         ConstruirePontHorizontal(G, cible.Coordonnee.Ligne, cible.Coordonnee.Colonne, pont);
+      end if;
+      end construireLeChemin;
 
    -------------------
    -- ResoudreHashi --
