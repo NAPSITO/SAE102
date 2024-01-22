@@ -230,9 +230,13 @@ package body Grille is
    -- modifierCase --
    ------------------
 
-   procedure modifierCase (G : in out Type_Grille; c : in Type_CaseHashi) is
+   function modifierCase
+     (G   : in Type_Grille; c : in Type_CaseHashi) return Type_Grille is
+      newGrille: Type_Grille;
    begin
-      G.g(ObtenirLigne(ObtenirCoordonnee(c)), ObtenirColonne(ObtenirCoordonnee(c))) := c;
+      newGrille := G;
+      newGrille.g(ObtenirLigne(ObtenirCoordonnee(c)), ObtenirColonne(ObtenirCoordonnee(c))) := c;
+      return newGrille;
    end modifierCase;
 
 end Grille;
