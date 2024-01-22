@@ -144,6 +144,7 @@ package body Resolution_Hashi is
       Cible : in out Type_CaseHashi; Pont : in Type_Pont;
       O : in Type_Orientation)
    is
+
       procedure ConstruirePontVertical
         (G : in out Type_Grille; Ligne : in Integer; Colonne : in Integer; Pont : in Type_Pont) is
       begin
@@ -166,18 +167,27 @@ package body Resolution_Hashi is
          end if;
       end ConstruirePontHorizontal;
 
-
-
-
    -------------------
    -- ResoudreHashi --
    -------------------
 
-   procedure ResoudreHashi (G : in out Type_Grille; Trouve : out Boolean) is
-   begin
-      pragma Compile_Time_Warning
-        (Standard.True, "ResoudreHashi unimplemented");
-      raise Program_Error with "Unimplemented procedure ResoudreHashi";
-   end ResoudreHashi;
+  procedure ResoudreHashi is
+   -- Déclarez ici vos variables nécessaires, initialisez-les si besoin
+   G : Type_Grille;
+   Trouve : Boolean;
+
+begin
+   -- Initialisez votre grille et d'autres données si nécessaire
+
+   -- Appelez la procédure de résolution de Hashi
+   ResoudreHashi(G, Trouve);
+
+   -- Affichez le résultat ou effectuez d'autres actions nécessaires
+   if Trouve then
+      Put_Line("La grille a été résolue.");
+   else
+      Put_Line("La grille n'a pas pu être résolue.");
+   end if;
+end ResoudreHashi;
 
 end Resolution_Hashi;
