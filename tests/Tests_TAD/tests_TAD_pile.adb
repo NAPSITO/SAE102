@@ -8,8 +8,9 @@ with Pile_Entier;        use Pile_Entier;
 with affichage; use affichage;
 -- Résolutions de sudoku
 with affichage;           use affichage;
-with resolutions;         use resolutions;
-with remplirGrille;       use remplirGrille;
+--with resolutions;         use resolutions;
+--with remplirGrille;       use remplirGrille;
+
 
 package body tests_TAD_Pile is
 
