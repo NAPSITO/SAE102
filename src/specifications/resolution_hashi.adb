@@ -1,4 +1,6 @@
 pragma Ada_2012;
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Integer_Text_IO; use ada.Integer_Text_IO;
 package body Resolution_Hashi is
 
    ---------------------------
@@ -134,49 +136,82 @@ package body Resolution_Hashi is
       NbNoeuds := NbNoeuds;
    end construireTableauSuccesseurs;
 
+    ------------------------
+   -- ConvertirEnTypePont --
+   ------------------------
+
+   function ConvertirEnTypePont(Valeur : Integer) return Pont.Type_Pont is
+begin
+   if Valeur = 0 then
+      return Pont.POTENTIEL;
+   elsif Valeur = 1 then
+      return Pont.UN;
+   else
+      return Pont.DEUX;
+   end if;
+end ConvertirEnTypePont;
 
    ------------------------
-   -- construireLeChemin --
-   ------------------------
+	-- construireLeChemin --
+	------------------------
 
-   procedure ConstruireLeChemin
-     (G : in out Type_Grille; Source : in out Type_CaseHashi;
-      Cible : in out Type_CaseHashi; Pont : in Type_Pont;
-      O : in Type_Orientation)
-   is
-      debut: Integer;
-      fin: Integer;
-      caseActuelle: Type_CaseHashi;
-   begin
-      caseActuelle := Source;
-      if ValeurOrientation(O) = -1 then
-         debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
-         fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
-         for i in debut..fin loop
-            caseActuelle := modifierPont(C => Source, p => Pont);
-         end loop;
-      elsif ValeurOrientation(O) = - 2 then
-         debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
-         fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
-         for i in debut..fin loop
-            caseActuelle := modifierPont(C => Source, p => Pont);
-         end loop;
-      elsif ValeurOrientation(O) = 1 then
-         debut := ObtenirLigne(C => ObtenirCoordonnee(Source));
-         fin := ObtenirLigne(C => ObtenirCoordonnee(Cible));
-         for i in debut..fin loop
-            caseActuelle := modifierPont(C => Source, p => Pont);
-         end loop;
-      elsif ValeurOrientation(O) = 2 then
-         debut := ObtenirColonne(C => ObtenirCoordonnee(Source));
-         fin := ObtenirColonne(C => ObtenirCoordonnee(Cible));
-         for i in debut..fin loop
-            caseActuelle := modifierPont(C => Source, p => Pont);
-         end loop;
-      else
-         raise PAS_D_ILE_CIBLE;
-      end if;
-   end ConstruireLeChemin;
+	procedure construireLeChemin
+		(G     : in out Type_Grille; source : in out Type_CaseHashi;
+	 cible : in out Type_CaseHashi; pont : in Type_Pont;
+	 o     : in     Type_Orientation)
+	 --Debug : in     Boolean := True) -- Ajout du paramètre optionnel
+	is
+		caseActuelle, caseSuivante : Type_CaseHashi;
+      ileSource, ileCible : Type_Ile;
+      Debug:Boolean:=False;
+	begin
+		caseActuelle := source;
+
+		while caseActuelle /= cible and aUnSuivant(G, caseActuelle, o) loop
+			caseSuivante := obtenirSuivant(G, caseActuelle, o);
+
+			if not estIle(ObtenirTypeCase(caseSuivante)) then
+				caseSuivante := modifierPont(caseSuivante, pont);
+				G := modifierCase(G, caseSuivante);
+			end if;
+
+			caseActuelle := caseSuivante;
+		end loop;
+
+      -- Affichage du chemin si l'option de débogage est activée
+
+		if Debug then
+			Put_Line("Debug: Chemin construit de ligne "); -- & Type_Coordonnee'Image(ObtenirCoordonnee(source)) &
+			--" à " & Type_Coordonnee'Image(ObtenirCoordonnee(cible)));
+			Put(ObtenirLigne(ObtenirCoordonnee(source)), 2);
+			Put(" à ");
+			Put(ObtenirLigne(ObtenirCoordonnee(cible)), 2);
+			Put(" et de colonne ");
+			Put(ObtenirColonne(ObtenirCoordonnee(source)), 2);
+			Put(" à ");
+			Put(ObtenirColonne(ObtenirCoordonnee(cible)), 2);
+			New_Line;
+		end if;
+
+		-- Mise à jour des îles si nécessaire
+		Put("Modification valeur île cible et île source :");
+		Put(" Source -> ");
+		Put(ObtenirValeur(ObtenirIle(source)) - obtenirValeur(pont), 1);
+		Put(" Cible -> ");
+		Put(ObtenirValeur(ObtenirIle(cible)) - obtenirValeur(pont), 1);
+		New_Line;
+
+		if ObtenirValeur(ObtenirIle(cible)) >= obtenirValeur(pont) then
+			ileCible := modifierIle(ObtenirIle(cible), obtenirValeur(pont));
+			cible := modifierIle(cible, ileCible);
+			G:=modifierCase(G, cible);
+		end if;
+		if ObtenirValeur(ObtenirIle(source)) >= obtenirValeur(pont) then
+			ileSource := modifierIle(ObtenirIle(source), obtenirValeur(pont));
+			source := modifierIle(source, ileSource);
+			G:=modifierCase(G, source);
+		end if;
+	end construireLeChemin;
 
 
    -------------------
@@ -184,19 +219,56 @@ package body Resolution_Hashi is
    -------------------
 
    procedure ResoudreHashi (G : in out Type_Grille; Trouve : out Boolean) is
-      -- Déclarez ici vos variables nécessaires, initialisez-les si besoin
+
+      caseParcours : Type_CaseHashi;    -- Variables pour parcourir la grille et stocker l'île cible
+      --ileTrouveBool : Boolean;                    -- Indicateur pour savoir si une île cible a été trouvée
+
+      procedure RelierIle (caseParcours : in out Type_CaseHashi; o : in Type_Orientation) is
+
+         ileCible : Type_CaseHashi;
+         ileTrouveBool : Boolean;
+
+      begin
+         if ObtenirValeur(ObtenirIle(caseParcours)) = 1 then
+            -- Si l'île a une valeur de 1, recherche automatiquement une île cible
+            rechercherUneIleCible(G, caseParcours, o, ileTrouveBool, ileCible);
+            if ileTrouveBool then
+               construireLeChemin(G, caseParcours, ileCible, UN, o);
+            end if;
+         elsif ObtenirValeur(ObtenirIle(caseParcours)) > 1 then
+            -- Si l'île a une valeur supérieure à 1, utilise la logique précédente
+            rechercherUneIleCible(G, caseParcours, o, ileTrouveBool, ileCible);
+            if ileTrouveBool then
+               construireLeChemin(G, caseParcours, ileCible, UN, o);            end if;
+         end if;
+      end RelierIle;
 
    begin
-      -- Initialisez votre grille et d'autres données si nécessaire
+      Trouve := False;    -- Initialisation du drapeau de résolution
 
-      -- Appelez la procédure de résolution de Hashi
-      ResoudreHashi(G, Trouve);
+      for i in 1..nbLignes(G) loop
+         for j in 1..nbColonnes(G) loop
+            caseParcours := ObtenirCase(G, ConstruireCoordonnees(i, j));   -- Récupération de la case courante
 
-      -- Affichez le résultat ou effectuez d'autres actions nécessaires
-      if Trouve then
-         Put_Line("La grille a été résolue.");
+            if estIle(ObtenirTypeCase(caseParcours)) then   -- Vérification si la case est une île non vide
+               RelierIle(caseParcours, NORD);
+               RelierIle(caseParcours, SUD);
+               RelierIle(caseParcours, EST);
+               RelierIle(caseParcours, OUEST);
+            end if;
+
+            --AfficherCase(caseParcours);
+            --modifierCase(G, caseParcours);
+            New_Line;
+            --AfficherGrille(G);
+         end loop;
+         --end loop;
+      end loop;
+
+      if estComplete(G) then   -- Vérification de la complétion du puzzle
+         Trouve := True;       -- La résolution est terminée
       else
-         Put_Line("La grille n'a pas pu être résolue.");
+         Trouve := False;
       end if;
    end ResoudreHashi;
 
