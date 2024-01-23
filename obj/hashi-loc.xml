@@ -1,23 +1,7 @@
 <?xml version="1.0"?>
 <Locations >
   <Project>
-    <vfs_file />
-    <file_marker column=" 1" line=" 1" >
-      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
-      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\resolution_hashi.adb</vfs_file>
-    </file_marker>
-    <file_marker column=" 1" line=" 1" >
-      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
-      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\resolution_hashi.adb</vfs_file>
-    </file_marker>
-    <file_marker column=" 1" line=" 1" >
-      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
-      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\resolution_hashi.adb</vfs_file>
-    </file_marker>
-    <file_marker column=" 13" line=" 49" >
-      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
-      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\grille.ads</vfs_file>
-    </file_marker>
+    <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_file>
     <file_marker column=" 1" line=" 1" >
       <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
       <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\resolution_hashi.adb</vfs_file>
@@ -798,9 +782,25 @@
       <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
       <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\tests\Tests_TAD\a_tester_grille.adb</vfs_file>
     </file_marker>
-    <file_marker current="true" column=" 1" line=" 1" >
+    <file_marker column=" 1" line=" 1" >
       <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
       <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\grille.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 18" line=" 29" >
+      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\grille.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\resolution_hashi.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\tad_pile.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 7" line=" 9" >
+      <vfs_project>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\hashi.gpr</vfs_project>
+      <vfs_file>C:\Users\titou\Documents\IUT\SAE\SAE102\sae_1.02v2\src\specifications\tad_pile.adb</vfs_file>
     </file_marker>
   </Project>
   <Project >
