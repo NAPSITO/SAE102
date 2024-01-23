@@ -127,66 +127,33 @@ package body Grille is
    -- aUnSuivant --
    ----------------
 
-   function aUnSuivant
+  function aUnSuivant
      (G : in Type_Grille; c : in Type_CaseHashi; o : Type_Orientation)
       return Boolean
    is
-      Col, Ligne : Integer;
-      i          : Integer;
+      Col, Lig: Integer;
    begin
+      -- on récupère les coodonnées de c
+      Col:= ObtenirColonne(ObtenirCoordonnee(c));
+      Lig := ObtenirLigne(ObtenirCoordonnee(c));
 
-      if ValeurOrientation (o) = ValeurOrientation (NORD) then
-         Col := ObtenirColonne (ObtenirCoordonnee (c));
-         i   := G.nbl + 1;
-         while i <= 0 loop
-            i := i - 1;
-            if ObtenirTypeCase (G.g (i, Col)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
+      -- obtenir les col et lig des successeurs en fonction de l'orientation
+      if ValeurOrientation(o) = ValeurOrientation(NORD) then
+         Lig := Lig - 1;
+      elsif ValeurOrientation(o) = ValeurOrientation(SUD) then
+         Lig := Lig + 1;
+      elsif ValeurOrientation(o) = ValeurOrientation(EST) then
+         Col := Col + 1;
+      else
+         Col := Col - 1;
       end if;
 
-      if ValeurOrientation (o) = ValeurOrientation (SUD) then
-         Col := ObtenirColonne (ObtenirCoordonnee (c));
-         i   := 0;
-         while i <= G.nbl loop
-            i := i + 1;
-            if ObtenirTypeCase (G.g (i, Col)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
+      -- Tester la case existe dans la grille
+      if Col>0 and Col <= G.nbc and Lig>0 and Lig <= G.nbl then
+         return True;
+      else
+         return False;
       end if;
-
-      if ValeurOrientation (o) = ValeurOrientation (EST) then
-         Ligne := ObtenirLigne (ObtenirCoordonnee (c));
-         i     := 0;
-         while i <= G.nbc loop
-            i := i + 1;
-            if ObtenirTypeCase (G.g (Ligne, i)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
-      end if;
-
-      if ValeurOrientation (o) = ValeurOrientation (OUEST) then
-         Ligne := ObtenirLigne (ObtenirCoordonnee (c));
-         i     := G.nbc + 1;
-         while i <= 0 loop
-            i := i - 1;
-            if ObtenirTypeCase (G.g (Ligne, i)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
-      end if;
-      return False;
    end aUnSuivant;
 
    --------------------
