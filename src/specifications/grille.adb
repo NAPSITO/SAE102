@@ -13,7 +13,7 @@ package body Grille is
       GrilleHashi.nbl:=nbl;
       GrilleHashi.nbc:=nbc;
       -- Levée d'exception
-      if nbl < 1 or nbl > TAILLE_MAX or nbc < 1 or nbc > TAILLE_MAX then
+      if nbl < 1 or else nbl > TAILLE_MAX or else nbc < 1 or else nbc > TAILLE_MAX then
          raise TAILLE_INVALIDE;
       end if;
       -- Création de la grille vide

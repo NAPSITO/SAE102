@@ -10,8 +10,6 @@ package body CaseHashi is
    begin
       TCH.C := C;
       TCH.T := MER;
-      TCH.I := ConstruireIle(v => 1);
-      TCH.P := POTENTIEL;
       return TCH;
    end ConstruireCase;
 
@@ -39,7 +37,7 @@ package body CaseHashi is
 
    function ObtenirIle (C : in Type_CaseHashi) return Type_Ile is
    begin
-      if ObtenirTypeCase(C) /= NOEUD then
+      if estIle(C.T) = False then
          raise TYPE_INCOMPATIBLE;
       end if;
       return C.I;
@@ -51,7 +49,7 @@ package body CaseHashi is
 
    function ObtenirPont (C : in Type_CaseHashi) return Type_Pont is
    begin
-      if EstPont(C.T) = FALSE then
+      if EstPont(C.T) = False then
          raise TYPE_INCOMPATIBLE;
       end if;
       return C.P;
@@ -61,8 +59,7 @@ package body CaseHashi is
    -- modifierIle --
    -----------------
 
-   function modifierIle
-     (C : in Type_CaseHashi; I : in Type_Ile) return Type_CaseHashi
+   function modifierIle(C : in Type_CaseHashi; I : in Type_Ile) return Type_CaseHashi
    is
       CaseH : Type_CaseHashi;
    begin
@@ -105,12 +102,12 @@ package body CaseHashi is
    function "=" (C1 : in Type_CaseHashi; C2 : in Type_CaseHashi) return Boolean
    is
    begin
-      if ObtenirTypeCase (C1) = ObtenirTypeCase (C2) and
-        ObtenirCoordonnee (C1) = ObtenirCoordonnee (C2) and
-        ObtenirPont (C1) = ObtenirPont (C2) and
-        ObtenirIle (C1) = ObtenirIle (C2)
-      then
-         return True;
+      if estIle (C1.T) and estIle (C2.T) then
+         return ObtenirIle(C1) = ObtenirIle(C2) and ObtenirCoordonnee(C1) = ObtenirCoordonnee(C2);
+      elsif estPont(C1.T) and estPont(C2.T) then
+         return ObtenirPont(C1) = ObtenirPont(C2) and ObtenirCoordonnee(C1) = ObtenirCoordonnee(C2);
+      elsif estMer(C1.T) = estMer(C2.T) then
+         return ObtenirCoordonnee(C1) = ObtenirCoordonnee(C2);
       else
          return False;
       end if;
