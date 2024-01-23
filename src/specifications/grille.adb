@@ -11,6 +11,8 @@ package body Grille is
       GrilleHashi : Type_Grille;
       Coordonnee: Type_Coordonnee;
    begin
+      GrilleHashi.nbl:=nbl;
+      GrilleHashi.nbc:=nbc;
       -- Levée d'exception
       if nbl < 1 or nbl > TAILLE_MAX or nbc < 1 or nbc > TAILLE_MAX then
          raise TAILLE_INVALIDE;
