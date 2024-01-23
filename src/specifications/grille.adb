@@ -9,21 +9,19 @@ package body Grille is
      (nbl : in Integer; nbc : in Integer) return Type_Grille
    is
       GrilleHashi : Type_Grille;
+      Coordonnee: Type_Coordonnee;
    begin
       -- Levée d'exception
       if nbl < 1 or nbl > TAILLE_MAX or nbc < 1 or nbc > TAILLE_MAX then
          raise TAILLE_INVALIDE;
       end if;
       -- Création de la grille vide
-      GrilleHashi.nbl := 1;
-      while GrilleHashi.nbl <= nbl loop
-         GrilleHashi.nbc := 1;
-         while GrilleHashi.nbc <= nbc loop
-            GrilleHashi.g (GrilleHashi.nbl, GrilleHashi.nbc) := ConstruireCase(ConstruireCoordonnees (GrilleHashi.nbl, GrilleHashi.nbc));
-            GrilleHashi.nbc := GrilleHashi.nbc + 1;
-         end loop;
-         GrilleHashi.nbl := GrilleHashi.nbl + 1;
-      end loop;
+    for i in 1 .. nbl loop
+            for j in 1 .. nbc loop
+                Coordonnee := ConstruireCoordonnees(i, j);
+                GrilleHashi.g(i, j) := ConstruireCase(Coordonnee);
+            end loop;
+        end loop;
       return GrilleHashi;
    end ConstruireGrille;
    --------------
@@ -50,11 +48,15 @@ package body Grille is
 
    function estGrilleVide (G : in Type_Grille) return Boolean is
    begin
-      if G.nbl = 0 and G.nbc = 0 then
-         return True;
-      else
-         return False;
-      end if;
+      for i in 1 .. nbLignes(G) loop
+         for j in 1 .. nbColonnes(G) loop
+            if estIle(ObtenirTypeCase(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+               return FALSE;
+            end if;
+         end loop;
+      end loop;
+
+      return TRUE; -- Si toutes les cases sont de type mer
    end estGrilleVide;
 
    -----------------
@@ -71,22 +73,18 @@ package body Grille is
    -----------
 
    function nbIle (G : in Type_Grille) return Integer is
-      i, j        : Integer;
-      nbIleGrille : Integer;
+
+      compteurIle:Integer:=0;
+
    begin
-      nbIleGrille := 0;
-      i           := 1;
-      while i <= G.nbl loop
-         j := 1;
-         while j <= G.nbc loop
-            if ObtenirTypeCase (G.g (i, j)) = NOEUD then
-               nbIleGrille := nbIleGrille + 1;
+     for i in 1 .. nbLignes(G) loop
+         for j in 1 .. nbColonnes(G) loop
+            if estIle(ObtenirTypeCase(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+               compteurIle:=compteurIle+1;
             end if;
-            j := j + 1;
          end loop;
-         i := i + 1;
       end loop;
-      return nbIleGrille;
+      return compteurIle;
    end nbIle;
 
    --------------------
@@ -94,24 +92,20 @@ package body Grille is
    --------------------
 
    function nbIleCompletes (G : in Type_Grille) return Integer is
-      i, j      : Integer;
-      nbIleFull : Integer;
+
+      compteurIle:Integer:=0;
+
    begin
-      nbIleFull := 0;
-      i         := 1;
-      while i <= G.nbl loop
-         j := 1;
-         while j <= G.nbc loop
-            if ObtenirTypeCase (G.g (i, j)) = NOEUD then
-               if ObtenirValeur (ObtenirIle (G.g (i, j))) = 0 then
-                  nbIleFull := nbIleFull + 1;
-               end if;
+     for i in 1 .. nbLignes(G) loop
+         for j in 1 .. nbColonnes(G) loop
+            if estIle(ObtenirTypeCase(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+               if estIleComplete(ObtenirIle(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+                  compteurIle:=compteurIle+1;
+                end if;
             end if;
-            j := j + 1;
          end loop;
-         i := i + 1;
       end loop;
-      return nbIleFull;
+      return compteurIle;
    end nbIleCompletes;
 
    -----------------
