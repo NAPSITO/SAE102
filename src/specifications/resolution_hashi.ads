@@ -2,6 +2,9 @@ with Grille;     use Grille;
 with Pont ; use Pont;
 with CaseHashi; use CaseHashi;
 with Orientation; use Orientation;
+with Ile; use Ile;
+with TypeCase; use TypeCase;
+with Coordonnee; use Coordonnee;
 
 package Resolution_Hashi is
 
@@ -37,10 +40,10 @@ package Resolution_Hashi is
    -- nbPont est le nombre de ponts successeurs potentiels
    -- nbNoeud est le nombre de noeuds successeurs potentiels
    procedure construireTableauSuccesseurs
-     (G : in     Type_Grille; C : Type_CaseHashi; s : out Type_Tab_Successeurs;
+     (G : in     Type_Grille; C : in Type_CaseHashi; s : out Type_Tab_Successeurs;
       NbPonts :    out Integer; NbNoeuds : out Integer);
 
-   -- modifie le graĥe g en inscrivant des ponts de valeur pont
+   -- modifie le graphe g en inscrivant des ponts de valeur pont
    -- entre la case source et la case cible
    -- en suivant l'orientation o
    procedure construireLeChemin
@@ -52,13 +55,5 @@ package Resolution_Hashi is
    -- Si tous les noeuds sont complets alors Trouve est a VRAI
    -- trouver est à FAUX sinon
    procedure ResoudreHashi (G : in out Type_Grille; Trouve : out Boolean);
-
---  private
---     type Type_Tab_Successeurs is record
---        NORD : Type_CaseHashi;
---        SUD : Type_CaseHashi;
---        EST : Type_CaseHashi;
---        OUEST : Type_CaseHashi;
---      end record;
 
 end Resolution_Hashi;

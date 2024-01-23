@@ -5,26 +5,23 @@ package body Grille is
    -- ConstruireGrille --
    ----------------------
 
-   function ConstruireGrille
-     (nbl : in Integer; nbc : in Integer) return Type_Grille
+   function ConstruireGrille(nbl : in Integer; nbc : in Integer) return Type_Grille
    is
       GrilleHashi : Type_Grille;
+      Coordonnee: Type_Coordonnee;
    begin
+      GrilleHashi.nbl:=nbl;
+      GrilleHashi.nbc:=nbc;
       -- Levée d'exception
-      if nbl < 1 or nbl > TAILLE_MAX or nbc < 1 or nbc > TAILLE_MAX then
+      if nbl <= 1 or else nbl > TAILLE_MAX or else nbc <= 1 or else nbc > TAILLE_MAX then
          raise TAILLE_INVALIDE;
       end if;
       -- Création de la grille vide
-      GrilleHashi.nbl := 1;
-      while GrilleHashi.nbl <= nbl loop
-         GrilleHashi.nbc := 1;
-         while GrilleHashi.nbc <= nbc loop
-            GrilleHashi.g (GrilleHashi.nbl, GrilleHashi.nbc) :=
-              ConstruireCase
-                (ConstruireCoordonnees (GrilleHashi.nbl, GrilleHashi.nbc));
-            GrilleHashi.nbc := GrilleHashi.nbc + 1;
+      for i in 1 .. nbl loop
+         for j in 1 .. nbc loop
+            Coordonnee := ConstruireCoordonnees(i, j);
+            GrilleHashi.g(i, j) := ConstruireCase(Coordonnee);
          end loop;
-         GrilleHashi.nbl := GrilleHashi.nbl + 1;
       end loop;
       return GrilleHashi;
    end ConstruireGrille;
@@ -52,11 +49,15 @@ package body Grille is
 
    function estGrilleVide (G : in Type_Grille) return Boolean is
    begin
-      if G.nbl = 0 and G.nbc = 0 then
-         return True;
-      else
-         return False;
-      end if;
+      for i in 1 .. nbLignes(G) loop
+         for j in 1 .. nbColonnes(G) loop
+            if estIle(ObtenirTypeCase(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+               return FALSE;
+            end if;
+         end loop;
+      end loop;
+
+      return TRUE; -- Si toutes les cases sont de type mer
    end estGrilleVide;
 
    -----------------
@@ -73,22 +74,18 @@ package body Grille is
    -----------
 
    function nbIle (G : in Type_Grille) return Integer is
-      i, j        : Integer;
-      nbIleGrille : Integer;
+
+      compteurIle:Integer:=0;
+
    begin
-      nbIleGrille := 0;
-      i           := 1;
-      while i <= G.nbl loop
-         j := 1;
-         while j <= G.nbc loop
-            if ObtenirTypeCase (G.g (i, j)) = NOEUD then
-               nbIleGrille := nbIleGrille + 1;
+     for i in 1 .. nbLignes(G) loop
+         for j in 1 .. nbColonnes(G) loop
+            if estIle(ObtenirTypeCase(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+               compteurIle:=compteurIle+1;
             end if;
-            j := j + 1;
          end loop;
-         i := i + 1;
       end loop;
-      return nbIleGrille;
+      return compteurIle;
    end nbIle;
 
    --------------------
@@ -96,24 +93,20 @@ package body Grille is
    --------------------
 
    function nbIleCompletes (G : in Type_Grille) return Integer is
-      i, j      : Integer;
-      nbIleFull : Integer;
+
+      compteurIle:Integer:=0;
+
    begin
-      nbIleFull := 0;
-      i         := 1;
-      while i <= G.nbl loop
-         j := 1;
-         while j <= G.nbc loop
-            if ObtenirTypeCase (G.g (i, j)) = NOEUD then
-               if ObtenirValeur (ObtenirIle (G.g (i, j))) = 0 then
-                  nbIleFull := nbIleFull + 1;
-               end if;
+     for i in 1 .. nbLignes(G) loop
+         for j in 1 .. nbColonnes(G) loop
+            if estIle(ObtenirTypeCase(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+               if estIleComplete(ObtenirIle(ObtenirCase(G,ConstruireCoordonnees(i,j)))) then
+                  compteurIle:=compteurIle+1;
+                end if;
             end if;
-            j := j + 1;
          end loop;
-         i := i + 1;
       end loop;
-      return nbIleFull;
+      return compteurIle;
    end nbIleCompletes;
 
    -----------------
@@ -133,66 +126,33 @@ package body Grille is
    -- aUnSuivant --
    ----------------
 
-   function aUnSuivant
+  function aUnSuivant
      (G : in Type_Grille; c : in Type_CaseHashi; o : Type_Orientation)
       return Boolean
    is
-      Col, Ligne : Integer;
-      i          : Integer;
+      Col, Lig: Integer;
    begin
+      -- on récupère les coodonnées de c
+      Col:= ObtenirColonne(ObtenirCoordonnee(c));
+      Lig := ObtenirLigne(ObtenirCoordonnee(c));
 
-      if ValeurOrientation (o) = ValeurOrientation (NORD) then
-         Col := ObtenirColonne (ObtenirCoordonnee (c));
-         i   := G.nbl + 1;
-         while i <= 0 loop
-            i := i - 1;
-            if ObtenirTypeCase (G.g (i, Col)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
+      -- obtenir les col et lig des successeurs en fonction de l'orientation
+      if ValeurOrientation(o) = ValeurOrientation(NORD) then
+         Lig := Lig - 1;
+      elsif ValeurOrientation(o) = ValeurOrientation(SUD) then
+         Lig := Lig + 1;
+      elsif ValeurOrientation(o) = ValeurOrientation(EST) then
+         Col := Col + 1;
+      else
+         Col := Col - 1;
       end if;
 
-      if ValeurOrientation (o) = ValeurOrientation (SUD) then
-         Col := ObtenirColonne (ObtenirCoordonnee (c));
-         i   := 0;
-         while i <= G.nbl loop
-            i := i + 1;
-            if ObtenirTypeCase (G.g (i, Col)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
+      -- Tester la case existe dans la grille
+      if Col>0 and Col <= G.nbc and Lig>0 and Lig <= G.nbl then
+         return True;
+      else
+         return False;
       end if;
-
-      if ValeurOrientation (o) = ValeurOrientation (EST) then
-         Ligne := ObtenirLigne (ObtenirCoordonnee (c));
-         i     := 0;
-         while i <= G.nbc loop
-            i := i + 1;
-            if ObtenirTypeCase (G.g (Ligne, i)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
-      end if;
-
-      if ValeurOrientation (o) = ValeurOrientation (OUEST) then
-         Ligne := ObtenirLigne (ObtenirCoordonnee (c));
-         i     := G.nbc + 1;
-         while i <= 0 loop
-            i := i - 1;
-            if ObtenirTypeCase (G.g (Ligne, i)) = NOEUD then
-               return True;
-            else
-               return False;
-            end if;
-         end loop;
-      end if;
-      return False;
    end aUnSuivant;
 
    --------------------
@@ -230,9 +190,13 @@ package body Grille is
    -- modifierCase --
    ------------------
 
-   procedure modifierCase (G : in out Type_Grille; c : in Type_CaseHashi) is
+   function modifierCase
+     (G   : in Type_Grille; c : in Type_CaseHashi) return Type_Grille is
+      newGrille: Type_Grille;
    begin
-      G.g(ObtenirLigne(ObtenirCoordonnee(c)), ObtenirColonne(ObtenirCoordonnee(c))) := c;
+      newGrille := G;
+      newGrille.g(ObtenirLigne(ObtenirCoordonnee(c)), ObtenirColonne(ObtenirCoordonnee(c))) := c;
+      return newGrille;
    end modifierCase;
 
 end Grille;

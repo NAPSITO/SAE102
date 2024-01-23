@@ -18,7 +18,7 @@ begin
    New_Line;
    Put_Line ("Test TAD Orientation ");
    Run_Tests_Orientation;
-    New_Line;
+   New_Line;
    Put_Line ("Test TAD TypeCase ");
    Run_Tests_TypeCase;
    New_Line;
