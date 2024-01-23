@@ -1,3 +1,2 @@
 obj/
-
-tests/test_reso.adb
+*.zip
