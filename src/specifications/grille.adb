@@ -5,8 +5,7 @@ package body Grille is
    -- ConstruireGrille --
    ----------------------
 
-   function ConstruireGrille
-     (nbl : in Integer; nbc : in Integer) return Type_Grille
+   function ConstruireGrille(nbl : in Integer; nbc : in Integer) return Type_Grille
    is
       GrilleHashi : Type_Grille;
       Coordonnee: Type_Coordonnee;
@@ -18,12 +17,12 @@ package body Grille is
          raise TAILLE_INVALIDE;
       end if;
       -- Création de la grille vide
-    for i in 1 .. nbl loop
-            for j in 1 .. nbc loop
-                Coordonnee := ConstruireCoordonnees(i, j);
-                GrilleHashi.g(i, j) := ConstruireCase(Coordonnee);
-            end loop;
-        end loop;
+      for i in 1 .. nbl loop
+         for j in 1 .. nbc loop
+            Coordonnee := ConstruireCoordonnees(i, j);
+            GrilleHashi.g(i, j) := ConstruireCase(Coordonnee);
+         end loop;
+      end loop;
       return GrilleHashi;
    end ConstruireGrille;
    --------------

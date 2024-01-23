@@ -136,82 +136,82 @@ package body Resolution_Hashi is
       NbNoeuds := NbNoeuds;
    end construireTableauSuccesseurs;
 
-    ------------------------
+   ------------------------
    -- ConvertirEnTypePont --
    ------------------------
 
    function ConvertirEnTypePont(Valeur : Integer) return Pont.Type_Pont is
-begin
-   if Valeur = 0 then
-      return Pont.POTENTIEL;
-   elsif Valeur = 1 then
-      return Pont.UN;
-   else
-      return Pont.DEUX;
-   end if;
-end ConvertirEnTypePont;
+   begin
+      if Valeur = 0 then
+         return Pont.POTENTIEL;
+      elsif Valeur = 1 then
+         return Pont.UN;
+      else
+         return Pont.DEUX;
+      end if;
+   end ConvertirEnTypePont;
 
    ------------------------
-	-- construireLeChemin --
-	------------------------
+   -- construireLeChemin --
+   ------------------------
 
-	procedure construireLeChemin
-		(G     : in out Type_Grille; source : in out Type_CaseHashi;
-	 cible : in out Type_CaseHashi; pont : in Type_Pont;
-	 o     : in     Type_Orientation)
-	 --Debug : in     Boolean := True) -- Ajout du paramètre optionnel
-	is
-		caseActuelle, caseSuivante : Type_CaseHashi;
+   procedure construireLeChemin
+     (G     : in out Type_Grille; source : in out Type_CaseHashi;
+      cible : in out Type_CaseHashi; pont : in Type_Pont;
+      o     : in     Type_Orientation)
+     --Debug : in     Boolean := True) -- Ajout du paramètre optionnel
+   is
+      caseActuelle, caseSuivante : Type_CaseHashi;
       ileSource, ileCible : Type_Ile;
       Debug:Boolean:=False;
-	begin
-		caseActuelle := source;
+   begin
+      caseActuelle := source;
 
-		while caseActuelle /= cible and aUnSuivant(G, caseActuelle, o) loop
-			caseSuivante := obtenirSuivant(G, caseActuelle, o);
+      while caseActuelle /= cible and aUnSuivant(G, caseActuelle, o) loop
+         caseSuivante := obtenirSuivant(G, caseActuelle, o);
 
-			if not estIle(ObtenirTypeCase(caseSuivante)) then
-				caseSuivante := modifierPont(caseSuivante, pont);
-				G := modifierCase(G, caseSuivante);
-			end if;
+         if not estIle(ObtenirTypeCase(caseSuivante)) then
+            caseSuivante := modifierPont(caseSuivante, pont);
+            G := modifierCase(G, caseSuivante);
+         end if;
 
-			caseActuelle := caseSuivante;
-		end loop;
+         caseActuelle := caseSuivante;
+      end loop;
 
       -- Affichage du chemin si l'option de débogage est activée
 
-		if Debug then
-			Put_Line("Debug: Chemin construit de ligne "); -- & Type_Coordonnee'Image(ObtenirCoordonnee(source)) &
-			--" à " & Type_Coordonnee'Image(ObtenirCoordonnee(cible)));
-			Put(ObtenirLigne(ObtenirCoordonnee(source)), 2);
-			Put(" à ");
-			Put(ObtenirLigne(ObtenirCoordonnee(cible)), 2);
-			Put(" et de colonne ");
-			Put(ObtenirColonne(ObtenirCoordonnee(source)), 2);
-			Put(" à ");
-			Put(ObtenirColonne(ObtenirCoordonnee(cible)), 2);
-			New_Line;
-		end if;
+      if Debug then
+         Put_Line("Debug: Chemin construit de ligne "); -- & Type_Coordonnee'Image(ObtenirCoordonnee(source)) &
+         --" à " & Type_Coordonnee'Image(ObtenirCoordonnee(cible)));
+         Put(ObtenirLigne(ObtenirCoordonnee(source)), 2);
+         Put(" à ");
+         Put(ObtenirLigne(ObtenirCoordonnee(cible)), 2);
+         Put(" et de colonne ");
+         Put(ObtenirColonne(ObtenirCoordonnee(source)), 2);
+         Put(" à ");
+         Put(ObtenirColonne(ObtenirCoordonnee(cible)), 2);
+         New_Line;
+      end if;
 
-		-- Mise à jour des îles si nécessaire
-		Put("Modification valeur île cible et île source :");
-		Put(" Source -> ");
-		Put(ObtenirValeur(ObtenirIle(source)) - obtenirValeur(pont), 1);
-		Put(" Cible -> ");
-		Put(ObtenirValeur(ObtenirIle(cible)) - obtenirValeur(pont), 1);
-		New_Line;
+      -- Mise à jour des îles si nécessaire
+      Put("Modification valeur île cible et île source :");
+      Put(" Source -> ");
+      Put(ObtenirValeur(ObtenirIle(source)) - obtenirValeur(pont), 1);
+      Put(" Cible -> ");
+      Put(ObtenirValeur(ObtenirIle(cible)) - obtenirValeur(pont), 1);
+      New_Line;
 
-		if ObtenirValeur(ObtenirIle(cible)) >= obtenirValeur(pont) then
-			ileCible := modifierIle(ObtenirIle(cible), obtenirValeur(pont));
-			cible := modifierIle(cible, ileCible);
-			G:=modifierCase(G, cible);
-		end if;
-		if ObtenirValeur(ObtenirIle(source)) >= obtenirValeur(pont) then
-			ileSource := modifierIle(ObtenirIle(source), obtenirValeur(pont));
-			source := modifierIle(source, ileSource);
-			G:=modifierCase(G, source);
-		end if;
-	end construireLeChemin;
+      if ObtenirValeur(ObtenirIle(cible)) >= obtenirValeur(pont) then
+         ileCible := modifierIle(ObtenirIle(cible), obtenirValeur(pont));
+         cible := modifierIle(cible, ileCible);
+         G:=modifierCase(G, cible);
+      end if;
+      if ObtenirValeur(ObtenirIle(source)) >= obtenirValeur(pont) then
+         ileSource := modifierIle(ObtenirIle(source), obtenirValeur(pont));
+         source := modifierIle(source, ileSource);
+         G:=modifierCase(G, source);
+      end if;
+   end construireLeChemin;
 
 
    -------------------
@@ -239,7 +239,8 @@ end ConvertirEnTypePont;
             -- Si l'île a une valeur supérieure à 1, utilise la logique précédente
             rechercherUneIleCible(G, caseParcours, o, ileTrouveBool, ileCible);
             if ileTrouveBool then
-               construireLeChemin(G, caseParcours, ileCible, UN, o);            end if;
+               construireLeChemin(G, caseParcours, ileCible, UN, o);
+            end if;
          end if;
       end RelierIle;
 
